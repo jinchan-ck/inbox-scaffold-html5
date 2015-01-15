@@ -35,19 +35,19 @@
         </div>
       </div>
 
-      <div ng-switch-when="{{App.showLogin}}" class="login-background">
-        <div class="login-panel">
-          <h2>Please Sign In</h2>
-          <form action="{{App.inboxAuthURL}}" method="POST">
-            <input class="form-control" style="text-align:center;" type="email" name="login_hint" placeholder="Email Address" ng-model="App.email"/>
-            <input class="form-control" style="text-align:center;" type="password" name="login_hint" placeholder="Password" ng-model="App.password"/>
-            <br>
-            <a class="btn btn-default" ng-click="mailcupLogin()">Log In</a>
-          </form>
-        </div>
-      </div>
+      <!--<div ng-show="{{App.showLogin}}" class="login-background">-->
+        <!--<div class="login-panel">-->
+          <!--<h2>Please Sign In</h2>-->
+          <!--<form action="{{App.inboxAuthURL}}" method="POST">-->
+            <!--<input class="form-control" style="text-align:center;" type="email" name="login_hint" placeholder="Email Address" ng-model="App.email"/>-->
+            <!--<input class="form-control" style="text-align:center;" type="password" name="login_hint" placeholder="Password" ng-model="App.password"/>-->
+            <!--<br>-->
+            <!--<a class="btn btn-default" ng-click="mailcupLogin()">Log In</a>-->
+          <!--</form>-->
+        <!--</div>-->
+      <!--</div>-->
 
-      <div ng-switch-when="{{!App.showLogin}}">
+      <div ng-show="true">
         <div id="content-sidebar">
           <ul>
             <li class="{{App.cssForTab('inbox')}}"><a href="#/inbox" hotkey="i"><img src="./img/tab_inbox@2x.png" /> Inbox</a></li>

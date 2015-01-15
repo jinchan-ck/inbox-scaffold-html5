@@ -1,0 +1,62 @@
+<!doctype html>
+<html ng-app>
+<head>
+    <base href="./">
+    <title>Inbox Client</title>
+    <script src="./components/angular/angular"></script>
+    <link rel="stylesheet" href="./components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./css/angular-animation.css"/>
+    <style>.clickable { cursor: pointer; }</style>
+
+    <link rel="icon" type="image/png" href="./img/favicon.png">
+    <link rel="stylesheet" type="text/css" href="./components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./css/dropzone.css">
+    <link rel="stylesheet" type="text/css" href="./css/baobab.css">
+    <script>
+        function Login($scope) {
+            $scope.mailcupLogin = function() {
+                var email, password;
+                console.log(self);
+                email = $scope.email;
+                password = $scope.password;
+                var req = {
+                    method: "POST",
+                    url: self.inboxAuthURL,
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    data: {
+                        email: email,
+                        password: password
+                    }
+                };
+                $http(req).success(function() {
+                    alert('success');
+                    window.location = 'index.html'
+                }).error(function() {
+                    alert('error');
+                });
+            };
+        }
+    </script>
+</head>
+
+<body bind-keys>
+<div class="theme-dark" ng-controller="Login">
+
+    <link rel="stylesheet" type="text/css" ng-href="./css/baobab-dark.css">
+
+    <div class="login-background">
+        <div class="login-panel">
+            <h2>Please Sign In</h2>
+            <form action="" method="POST">
+                <input class="form-control" style="text-align:center;" type="email" name="login_hint" placeholder="Email Address" ng-model="email"/>
+                <input class="form-control" style="text-align:center;" type="password" name="login_hint" placeholder="Password" ng-model="password"/>
+                <br>
+                <a class="btn btn-default" ng-click="mailcupLogin()">Log In</a>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
