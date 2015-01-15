@@ -2,13 +2,14 @@ define ['angular'], (angular) ->
   angular.module("baobab.controller.app", [])
     .controller('AppCtrl', [
         '$scope',
+        '$namespaces',
         '$inbox',
         '$auth',
         '$location',
         '$cookieStore',
         '$sce',
         '$http',
-    ($scope, $inbox, $auth, $location, $cookieStore, $sce, $http) ->
+    ($scope, $namespaces, $inbox, $auth, $location, $cookieStore, $sce, $http) ->
       window.AppCtrl = @
       self = @
       @inboxAuthURL = $sce.trustAsResourceUrl('')
@@ -27,8 +28,7 @@ define ['angular'], (angular) ->
             password: password
 
         $http(req).success(->
-          $scope.App.showLogin = false
-          window.AppCtrl.namespace = () => "a2fu38n17v505ysko8d2yjqm2"
+          $scope.App.showLogin = true
         ).error ->
           alert "failed"
 

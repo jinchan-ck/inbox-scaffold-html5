@@ -1,62 +1,273 @@
 <!doctype html>
-<html ng-app>
-<head>
-    <base href="./">
-    <title>Inbox Client</title>
-    <script src="./components/angular/angular"></script>
-    <link rel="stylesheet" href="./components/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="./css/angular-animation.css"/>
-    <style>.clickable { cursor: pointer; }</style>
+<html ng-app="LoginApp">
+    <head>
+        <base href="./">
+        <title>Inbox Client</title>
+        <script src="./components/angular/angular.js"></script>
+        <link rel="stylesheet" href="./components/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="./css/angular-animation.css"/>
+        <style>.clickable { cursor: pointer; }</style>
 
-    <link rel="icon" type="image/png" href="./img/favicon.png">
-    <link rel="stylesheet" type="text/css" href="./components/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="./css/dropzone.css">
-    <link rel="stylesheet" type="text/css" href="./css/baobab.css">
-    <script>
-        function Login($scope) {
-            $scope.mailcupLogin = function() {
-                var email, password;
-                console.log(self);
-                email = $scope.email;
-                password = $scope.password;
-                var req = {
-                    method: "POST",
-                    url: self.inboxAuthURL,
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    data: {
-                        email: email,
-                        password: password
-                    }
+        <link rel="icon" type="image/png" href="./img/favicon.png">
+        <link rel="stylesheet" type="text/css" href="./components/bootstrap/dist/css/bootstrap.min.css">
+        <script>
+            function setCookie(cname, cvalue, exdays) {
+                var d = new Date();
+                d.setTime(d.getTime() + (exdays*24*60*60*1000));
+                var expires = "expires="+d.toUTCString();
+                document.cookie = cname + "=" + cvalue + "; " + expires;
+            }
+            function setAppId() {
+                var field = document.getElementById('appIdField');
+                setCookie('baobab-app-id', field.value, 31);
+                window.location = 'index.html'
+            }
+            angular.module('LoginApp', [])
+            .controller('Login', function ($scope, $http) {
+                $scope.mailcupLogin = function() {
+                    var email, password;
+                    console.log(self);
+                    email = $scope.email;
+                    password = $scope.password;
+                    var req = {
+                        method: "POST",
+                        url: self.inboxAuthURL,
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        data: {
+                            email: email,
+                            password: password
+                        }
+                    };
+                    $http(req).success(function() {
+                        //alert('success');
+                        setCookie('uid', "\"" + email + "\"", 1);
+                        window.location = 'index.html'
+                    }).error(function() {
+                        alert('error');
+                    });
                 };
-                $http(req).success(function() {
-                    alert('success');
-                    window.location = 'index.html'
-                }).error(function() {
-                    alert('error');
-                });
-            };
-        }
-    </script>
-</head>
+            })
 
-<body bind-keys>
-<div class="theme-dark" ng-controller="Login">
+        </script>
+        <style>
+            /* input 图标位于左侧 .has-feedback-left */
+            .has-feedback-left input.form-control {
+                padding-left: 34px;
+                padding-right: 12px;
+            }
+            .has-feedback-left .form-control-feedback {
+                left: 0;
+            }
 
-    <link rel="stylesheet" type="text/css" ng-href="./css/baobab-dark.css">
 
-    <div class="login-background">
-        <div class="login-panel">
-            <h2>Please Sign In</h2>
-            <form action="" method="POST">
-                <input class="form-control" style="text-align:center;" type="email" name="login_hint" placeholder="Email Address" ng-model="email"/>
-                <input class="form-control" style="text-align:center;" type="password" name="login_hint" placeholder="Password" ng-model="password"/>
-                <br>
-                <a class="btn btn-default" ng-click="mailcupLogin()">Log In</a>
+            .list-group-item, input, textarea {
+                border-radius: 0 !important;
+            }
+
+            html, body {
+                height: 100%;
+                background-color: #fff;
+            }
+
+            .modal {
+                border: none;
+                margin: 0 !important;
+            }
+
+            .modal .modal-header {
+                background-color: rgb(84, 69, 57);
+            }
+
+            .modal .modal-header .close {
+                color: #fff;
+            }
+
+            .modal .modal-body{
+                margin: 0;
+                padding: 0;
+            }
+
+            .modal .modal-body .form-group {
+                margin-bottom: 0;
+            }
+
+            .modal .modal-body .form-group .form-control {
+                border: none;
+                border-bottom: 1px solid #ccc;
+                box-shadow: none;
+            }
+
+            .container-fluid, .row {
+                margin: 0;
+                padding: 0;
+                height: 100%;
+            }
+
+            .wave-sidebar {
+                background-color: rgb(84, 69, 57);
+                height: 100%;
+                color: #fff;
+            }
+
+            .wave-sidebar > h3 {
+                margin-top: 0;
+                padding: 20px 0;
+            }
+
+            .wave-sidebar > div {
+                margin: 15px -15px;
+            }
+
+            .wave-sidebar > div > a {
+                border: none;
+                background-color: rgb(84, 69, 57);
+                color: #aaa;
+            }
+
+            .wave-sidebar > div > a:hover {
+                color: #fff;
+                background-color: rgb(96, 175, 157);
+            }
+
+            .wave-sidebar .badge {
+                background-color: #c9302c;
+            }
+
+            .wave-sidebar .wave-user {
+                margin: 0 0 0 -15px;
+                padding: 15px;
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                background-color: rgb(72, 62, 53);
+            }
+
+            .wave-sidebar .wave-user:hover {
+                cursor: pointer;
+            }
+
+            .wave-user .media {
+                position: relative;
+                margin-top: 0;
+            }
+
+
+            .wave-content {
+                height: 100%;
+                margin:0;
+                padding:0;
+            }
+
+            .wave-navbar {
+                margin:0;
+                padding:0;
+                background-color: #fff;
+                border: none;
+            }
+
+            .wave-navbar input {
+                box-shadow: none;
+            }
+
+            .wave-navbar .wave-paging a {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+
+            .wave-body > a {
+                border: none;
+                padding: 5px;
+            }
+
+            .wave-body > hr {
+                margin: 1px 20px;
+            }
+
+            .wave-body .row {
+                line-height: 47px;
+            }
+
+            .wave-body .row span {
+                vertical-align: middle;
+            }
+
+            img {
+                width: 36px;
+                height: 36px;
+                margin-left: 5px;
+                margin-right: 5px;
+            }
+
+            .wave-head {
+                padding-left:20px;
+            }
+
+            .wave-thread > div {
+                padding: 0;
+                border-top: 1px solid #ddd;
+            }
+
+            .wave-thread .panel {
+                margin-top: 0 !important;
+            }
+
+            .wave-thread .list-group li{
+                border: none;
+            }
+
+            .wave-thread .media-heading {
+                color: #000 !important;
+            }
+
+            .wave-login {
+                height: 100%;
+                background-color: rgb(84,69,57);
+            }
+
+            .wave-login > form {
+                position: relative;
+                width: 250px;
+                height: 300px;
+                margin-left: auto;
+                margin-right: auto;
+                top: 30%;
+            }
+
+            .wave-login h3 {
+                text-align: center;
+                color: #fff;
+                margin-top: 0;
+                margin-bottom: 20px;
+            }
+
+            .wave-login form input {
+                border-radius: 3px !important;
+            }
+
+            .wave-login form button {
+                background-color: rgb(96, 175, 157);
+                color: #fff;
+            }
+        </style>
+    </head>
+
+    <body bind-keys>
+        <div class="wave-login" ng-controller="Login">
+            <form role="form">
+                <h3>Mailcup</h3>
+                <div class="form-group has-feedback has-feedback-left">
+                    <span class="glyphicon glyphicon-envelope text-muted form-control-feedback"></span>
+                    <input type="text" class="form-control" placeholder="Email" ng-model="email">
+                </div>
+                <div class="form-group has-feedback has-feedback-left">
+                    <span class="glyphicon glyphicon-lock text-muted form-control-feedback"></span>
+                    <input type="password" class="form-control" placeholder="Password" ng-model="password">
+                </div>
+
+                <button type="submit" class="btn btn-block" ng-click="mailcupLogin()">Sign in</button>
             </form>
         </div>
-    </div>
-</div>
-</body>
+    </body>
 </html>
