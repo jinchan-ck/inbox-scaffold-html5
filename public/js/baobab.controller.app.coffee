@@ -28,7 +28,7 @@ define ['angular'], (angular) ->
             password: password
 
         $http(req).success(->
-          window.location = 'main.html'
+          $scope.App.showLogin = true
         ).error ->
           alert "failed"
 
