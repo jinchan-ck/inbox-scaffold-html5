@@ -8,10 +8,29 @@ define ['angular'], (angular) ->
         '$location',
         '$cookieStore',
         '$sce',
-    ($scope, $namespaces, $inbox, $auth, $location, $cookieStore, $sce) ->
+        '$http',
+    ($scope, $namespaces, $inbox, $auth, $location, $cookieStore, $sce, $http) ->
       window.AppCtrl = @
+      @inboxAuthURL = $sce.trustAsResourceUrl('')
 
-      @inboxAuthURL = $sce.trustAsResourceUrl('https://www.inboxapp.com/oauth/authorize')
+      $scope.mailcupLogin = ->
+        email = $scope.email
+        password = $scope.password
+        req =
+          method: "POST"
+          url: @inboxAuthURL
+          headers:
+            "Content-Type": "application/json"
+
+          data:
+            email: email
+            password: password
+
+        $http(req).success(->
+          alert "success"
+        ).error ->
+          alert "failed"
+
       @inboxClientID = $inbox.appId()
       @inboxRedirectURL = window.location.href.split('/#')[0].replace('index.html', '')
       @loginHint = ''
