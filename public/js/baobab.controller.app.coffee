@@ -11,23 +11,24 @@ define ['angular'], (angular) ->
         '$http',
     ($scope, $namespaces, $inbox, $auth, $location, $cookieStore, $sce, $http) ->
       window.AppCtrl = @
+      self = @
       @inboxAuthURL = $sce.trustAsResourceUrl('')
 
       $scope.mailcupLogin = ->
-        email = $scope.email
-        password = $scope.password
+        console.log(self)
+        email = $scope.App.email
+        password = $scope.App.password
         req =
           method: "POST"
-          url: @inboxAuthURL
+          url: self.inboxAuthURL
           headers:
             "Content-Type": "application/json"
-
           data:
             email: email
             password: password
 
         $http(req).success(->
-          alert "success"
+          window.location = 'main.html'
         ).error ->
           alert "failed"
 
