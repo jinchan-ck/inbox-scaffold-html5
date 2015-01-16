@@ -4,7 +4,9 @@ require ["angular"], (angular) ->
   .service('$auth', ['$cookieStore', '$location', '$inbox', ($cookieStore, $location, $inbox) ->
 
     @clearToken = () =>
-      $cookieStore.remove('inbox_auth_token')
+     # $cookieStore.remove('inbox_auth_token')
+      $cookieStore.remove('namespace_id')
+      $cookieStore.remove('uid')
       window.location = '/'
 
     @needToken = () =>
