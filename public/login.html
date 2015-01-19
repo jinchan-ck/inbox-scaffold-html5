@@ -9,7 +9,7 @@
         <style>.clickable { cursor: pointer; }</style>
 
         <link rel="icon" type="image/png" href="./img/favicon.png">
-        <link rel="stylesheet" type="text/css" href="./components/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
         <script>
             function setCookie(cname, cvalue, exdays) {
                 var d = new Date();
@@ -40,9 +40,12 @@
                             password: password
                         }
                     };
-                    $http(req).success(function() {
+                    $http(req).success(function(res) {
                         //alert('success');
+                        console.log('%j', res.namespace_id);
+                        setCookie('namespace_id', res.namespace_id, 1);
                         setCookie('uid', "\"" + email + "\"", 1);
+
                         window.location = 'index.html'
                     }).error(function() {
                         alert('error');
