@@ -15,6 +15,7 @@ define ["angular"], (angular, events) ->
         namespace_id = c.substring("namespace_id=".length, c.length)  unless c.indexOf("namespace_id") is -1
         i++
       console.log(namespace_id)
+      $inbox.setRequestHeader('Cookie', document.cookie)
       @promise = $inbox.namespace(namespace_id).then (namespace) =>
         @_namespaces = [namespace]
 
